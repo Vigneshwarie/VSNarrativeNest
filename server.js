@@ -1,5 +1,6 @@
 // import express package
 const express = require('express');
+const sequelize = require('./config/connection');
 
 // Initialize express
 const app = express();
@@ -15,6 +16,8 @@ app.get('/', (req, res) => res.send('Hello World'));
 const PORT = process.env.PORT || 3001;
 
 // Listening to the port
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+sequelize.sync({ force: false }).then(() => {
+     app.listen(PORT, () => {
+          console.log(`Server running on port ${PORT}`);
+     });
 });
