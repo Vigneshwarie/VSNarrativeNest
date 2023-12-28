@@ -1,1 +1,9 @@
-<h1>Hello World</h1>
+{{#each  filteredBlogs as |blog|}}
+<div class="card">
+  <h5 class="card-header">Blog Id: {{{blog.blog_id}}}</h5>
+  <div class="card-body">
+    <h5 class="card-title">User Id: {{{blog.user_id}}}</h5>
+    <p class="card-text">{{{blog.blog_post}}}</p>
+  </div>
+</div>
+{{/each}}

@@ -4,6 +4,7 @@ const sequelize = require('./config/connection');
 // Importing handlebars
 const exphbs = require('express-handlebars');
 const hbs = exphbs.create({});
+const allRoutes = require('./controllers');
 
 // Initialize express
 const app = express();
@@ -16,7 +17,7 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 //Middleware to access for homeroutes
-app.use(require('./controllers/homeRoutes'));
+app.use(allRoutes);
 
 // Set the port
 const PORT = process.env.PORT || 3001;
