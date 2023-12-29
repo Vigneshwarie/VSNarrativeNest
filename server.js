@@ -5,6 +5,7 @@ const sequelize = require('./config/connection');
 const exphbs = require('express-handlebars');
 const hbs = exphbs.create({});
 const allRoutes = require('./controllers');
+const path = require('path');
 
 // Initialize express
 const app = express();
@@ -12,6 +13,7 @@ const app = express();
 // Middleware to parse JSON and form data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');

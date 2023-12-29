@@ -1,9 +1,11 @@
 {{#each  filteredBlogs as |blog|}}
-<div class="card">
-  <h5 class="card-header">Blog Id: {{{blog.blog_id}}}</h5>
-  <div class="card-body">
-    <h5 class="card-title"> {{{blog.created_at}}} {{{blog.blog_title}}} </h5>
-    <p class="card-text">{{{blog.blog_post}}}</p>
-  </div>
+<div class="container-sm">
+     <div class="card box-border">
+          <h5 class="card-header text-bold">{{{blog.blog_title}}} Posted by {{{blog.first_name}}} {{{blog.last_name}}}</h5>
+          <div class="card-body">
+               <p class="card-text">{{{blog.blog_post}}}</p>
+          </div>
+     </div>
 </div>
+<br/>
 {{/each}}

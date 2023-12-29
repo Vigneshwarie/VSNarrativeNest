@@ -1,0 +1,15 @@
+
+.card-header {
+     background-color: #882CDF;
+     font-size: medium;
+     color: #fff;
+}
+
+.text-bold {
+     font-weight: bold;
+}
+
+.box-border {
+     border: solid 3px #882CDF;
+}
+
