@@ -1,7 +1,7 @@
 {{#each  filteredBlogs as |blog|}}
 <div class="container-sm">
      <div class="card box-border">
-          <h5 class="card-header text-bold">{{{blog.blog_title}}} Posted by {{{blog.first_name}}} {{{blog.last_name}}}</h5>
+          <h5 class="card-header text-bold">{{{blog.blog_title}}} Posted by {{{blog.user.first_name}}} {{{blog.user.last_name}}}</h5>
           <div class="card-body">
                <p class="card-text">{{{blog.blog_post}}}</p>
           </div>

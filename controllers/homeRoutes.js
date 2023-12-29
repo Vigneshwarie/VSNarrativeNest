@@ -7,12 +7,15 @@ router.get('/', async (req, res) => {
     const blogData = await Blog.findAll({
       include: [{
         model: User,
-        attributes:['first_name', 'last_name', 'username'],
+          attributes: {
+            exclude: ["password"]
+          },
         }]
     });
 
     // Get the necessary data
     const filteredBlogs = blogData.map(blog => blog.get({ plain: true }));
+    console.log(filteredBlogs);
     res.render('hello', {filteredBlogs});
   } catch (err) {
     res.status(500).json(err);
