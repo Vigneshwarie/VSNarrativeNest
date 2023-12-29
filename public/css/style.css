@@ -13,3 +13,12 @@
      border: solid 3px #882CDF;
 }
 
+.text-align-right {
+     float: right;
+}
+
+.text-align-left {
+     float: left;
+}
+
+
