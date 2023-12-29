@@ -22,6 +22,10 @@ Blog.init(
                     key:'user_id',
                },           
           },
+          blog_title: {
+               type: DataTypes.STRING,
+               allowNull:false,
+          },
           blog_post: {
                type: DataTypes.TEXT,
                allowNull:false,  
