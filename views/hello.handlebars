@@ -3,7 +3,7 @@
      <div class="card box-border">
           <h5 class="card-header text-bold"> 
                <span class="text-align-left">{{{blog.blog_title}}}</span> 
-               <span class="text-align-right">Posted by {{{blog.user.first_name}}} {{{blog.user.last_name}}} on {{{ blog.createdAt}}}</span>
+               <span class="text-align-right">Posted by {{{blog.user.first_name}}} {{{blog.user.last_name}}} on {{ formatDate blog.createdAt }}</span>
           </h5>
           <div class="card-body">
                <p class="card-text">{{{blog.blog_post}}}</p>
