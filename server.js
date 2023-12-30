@@ -7,9 +7,18 @@ const exphbs = require('express-handlebars');
 const hbs = exphbs.create({helpers});
 const allRoutes = require('./controllers');
 const path = require('path');
+const session = require('express-session');
 
 // Initialize express
 const app = express();
+
+const sessionVariable = {
+     secret: 'Super secret secret',
+     resave: false,
+     saveUninitialized: true,
+};
+
+app.use(session(sessionVariable));
 
 // Middleware to parse JSON and form data
 app.use(express.json());
