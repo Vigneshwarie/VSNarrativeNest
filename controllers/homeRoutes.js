@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
     // Get the necessary data
     const filteredBlogs = blogData.map(blog => blog.get({ plain: true }));
     console.log(filteredBlogs);
-    res.render('hello', {filteredBlogs});
+    res.render('homepage', {filteredBlogs});
   } catch (err) {
     res.status(500).json(err);
   }
