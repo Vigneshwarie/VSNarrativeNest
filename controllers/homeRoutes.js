@@ -15,7 +15,6 @@ router.get('/', async (req, res) => {
 
     // Get the necessary data
     const filteredBlogs = blogData.map(blog => blog.get({ plain: true }));
-    console.log(filteredBlogs);
     res.render('homepage', {filteredBlogs});
   } catch (err) {
     res.status(500).json(err);
@@ -23,7 +22,12 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/dashboard', (req, res) => {
+  if (req.session.loggedIn) {
+    res.render('dashboard');
+  } else {
     res.render('login');
+  }
+    
 });
 
 // Checking for the login 
@@ -34,22 +38,20 @@ router.post('/login', async (req, res) => {
           username: req.body.email,
         },
       });
-    console.log(88888);
-    console.log(dbUserData);
       
       if (!dbUserData) {
         res.status(400).json({ message: 'Incorrect email or password. Please try again!' });
         return;
       }
     
-      const validPassword = await dbUserData.checkPassword(req.body.password);
+    const validPassword = await dbUserData.checkPassword(req.body.password);
 
-      if (!validPassword) {
-        res.status(400).json({ message: 'Incorrect email or password. Please try again!' });
-        return;
-      }
+    if (!validPassword) {
+      res.status(400).json({ message: 'Incorrect email or password. Please try again!' });
+      return;
+    }
       
-      req.session.save(() => {
+    req.session.save(() => {
         req.session.loggedIn = true;
         res.status(200).json({ user: dbUserData, message: 'You are now logged in!' });
       });

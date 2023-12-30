@@ -8,6 +8,7 @@ const loginFormHandler = async (event) => {
      console.log(email);
      console.log(password);
 
+    
      if (email && password) {
           const response = await fetch('/login', {
                method: 'POST',
@@ -15,12 +16,16 @@ const loginFormHandler = async (event) => {
                headers: { 'Content-Type': 'application/json' },
           });
 
+          console.log(response);
+ 
           if (response.ok) {
-               document.location.replace('/');
+               document.location.replace('/dashboard');
           } else {
                alert('Failed to log in.');
-          }
-     }
+          } 
+     } 
 };
 
-document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
+document
+  .querySelector('.login-form')
+  .addEventListener('submit', loginFormHandler);

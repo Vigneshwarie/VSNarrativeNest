@@ -3,7 +3,6 @@
 // Moved this functionality to the utils folder from the scripts
 module.exports = {
      formatDate: (vDate) => {
-          console.log(vDate);
           const date = new Date(vDate);
           const [month, day, year] = [
                date.getMonth(),
