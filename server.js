@@ -1,7 +1,7 @@
 // import express package
 const express = require('express');
 const sequelize = require('./config/connection');
-const helpers = require('./public/js/script');
+const helpers = require('./utils/helpers');
 // Importing handlebars
 const exphbs = require('express-handlebars');
 const hbs = exphbs.create({helpers});
