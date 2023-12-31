@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 
     // Get the necessary data
     const filteredBlogs = blogData.map(blog => blog.get({ plain: true }));
-    res.render('homepage', {filteredBlogs});
+    res.render('homepage', {filteredBlogs, loggedIn: req.session.loggedIn});
   } catch (err) {
     res.status(500).json(err);
   }
@@ -23,11 +23,14 @@ router.get('/', async (req, res) => {
 
 router.get('/dashboard', (req, res) => {
   if (req.session.loggedIn) {
-    res.render('dashboard');
+    res.render('dashboard', {loggedIn: req.session.loggedIn});
   } else {
     res.render('login');
   }
-    
+});
+
+router.get('/login', (req, res) => {
+  res.render('login');
 });
 
 // Checking for the login 
