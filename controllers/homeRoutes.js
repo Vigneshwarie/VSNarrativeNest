@@ -21,6 +21,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Router which checks for logged in user else redirect to login page. If it has a session user, then navigates to the dashboard
 router.get('/dashboard', (req, res) => {
   if (req.session.loggedIn) {
     res.render('dashboard', {loggedIn: req.session.loggedIn});
@@ -30,7 +31,7 @@ router.get('/dashboard', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-  res.render('login');
+    res.render('login');
 });
 
 // Checking for the login 
@@ -63,5 +64,6 @@ router.post('/login', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
 
 module.exports = router;
