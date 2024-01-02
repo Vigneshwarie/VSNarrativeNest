@@ -87,4 +87,22 @@ router.get('/blog', (req, res) => {
 });
 
 
+router.post('/blog', async (req, res) => {
+  try {
+    const saveBlogData = await Blog.create({
+      user_id: req.body.user_id,
+      blog_title: req.body.blog_title,
+      blog_post: req.body.blog_post,
+    });
+
+    req.session.save(() => {
+      req.session.loggedIn = true;
+      res.status(200).json(saveBlogData);
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
 module.exports = router;

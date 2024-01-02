@@ -1,4 +1,5 @@
 var loginButton = document.querySelector('.login-form');
+var submitPostBtn = document.querySelector('#submitPostBtn');
 
 
 const loginFormHandler = async (event) => {
@@ -22,10 +23,50 @@ const loginFormHandler = async (event) => {
      } 
 };
 
+const saveBlogPostHandler = (event) => {
+     event.preventDefault();
+     const blogTitle = document.querySelector('#blogTitle').value;
+     const blogPost = document.querySelector('#blogPost').value;
+
+     const newBlogPost = {
+          user_id: 1,
+          blog_title: blogTitle,
+          blog_post: blogPost
+     };
+     saveBlogPost(newBlogPost);
+};
+
+const saveBlogPost = async (newBlogPost) => {
+     const response = await fetch('/blog', {
+          method: 'POST',
+          headers: {
+               'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(newBlogPost)
+     });
+
+     if (response.ok) {
+          document.location.replace('/');
+     } else {
+          alert('Error in saving the posts');
+     } 
+};
+     
+     
+     
 
 
 
 
-loginButton.addEventListener('click', loginFormHandler);
+
+
+
+if (window.location.pathname === '/login') {
+     loginButton.addEventListener('click', loginFormHandler);
+}
+
+if (window.location.pathname === '/blog') {
+     submitPostBtn.addEventListener('click', saveBlogPostHandler);
+}
 
 
