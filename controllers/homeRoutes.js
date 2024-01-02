@@ -69,7 +69,6 @@ router.post('/login', async (req, res) => {
 router.post('/logout', (req, res) => {
   try {
     if (req.session.loggedIn) {
-      console.log(8888);
       req.session.destroy(() => {
         res.status(204).end();
       });
@@ -81,6 +80,10 @@ router.post('/logout', (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
+});
+
+router.get('/blog', (req, res) => {
+    res.render('blog', {loggedIn: req.session.loggedIn});
 });
 
 

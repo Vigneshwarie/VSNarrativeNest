@@ -24,3 +24,8 @@
      background-color: #882CDF;
 }
 
+.text-align-center {
+     float:right;
+     left:50%;
+}
+

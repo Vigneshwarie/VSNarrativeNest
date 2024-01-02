@@ -12,3 +12,15 @@
 </div>
 <br/>
 {{/each}}
+<div class="container-sm">
+     <div class="text-align-center">
+          <span class="text-align-center">
+               {{#if loggedIn}}
+               <button type="button" class="btn btn-primary text-align-center" onclick="window.location.href='/blog'">Create a Post</button>
+               {{else}}
+               <button type="button" class="btn btn-primary text-align-center" onclick="window.location.href='/login'">Create a Post</button>
+               {{/if}}
+          </span>
+     </div>
+</div>
+

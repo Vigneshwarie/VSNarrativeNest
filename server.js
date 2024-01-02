@@ -36,6 +36,7 @@ const PORT = process.env.PORT || 3001;
 
 // Commented this sequelize sync as it repeatedly sync on multiple commits and started throwing error Error Code: 1069. Too many keys specified; max 64 keys allowed
 // Based on this thread, I'm commenting this as it says we dont need to sync the database frequently when no changes made on database structure
+// The thread https://github.com/sequelize/sequelize/issues/9653
 // Listening to the port
 //sequelize.sync({ force: false }).then(() => {
      app.listen(PORT, () => {
