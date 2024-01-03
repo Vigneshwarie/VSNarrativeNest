@@ -51,6 +51,10 @@ const saveBlogPost = async (newBlogPost) => {
      } 
 };
      
+function displayControl() {
+     document.querySelector('#commentLink').classList.value = "hideControl";
+     document.querySelector('#commentBox').classList.value = "showControl";
+}
      
      
 

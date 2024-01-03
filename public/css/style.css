@@ -16,6 +16,10 @@
      float: right;
 }
 
+.margin-right {
+     margin-right: 5px;
+}
+
 .text-align-left {
      float: left;
 }
@@ -27,5 +31,13 @@
 .text-align-center {
      float:left;
      left:50%;
+}
+
+.showControl {
+     display: block;
+}
+
+.hideControl {
+     display: hide;
 }
 

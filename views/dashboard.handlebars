@@ -1,20 +1,16 @@
 
 
-<div class="container text-center">
-  <div class="row align-items-start">
-      {{#if loggedIn}}
-    <div class="col text-bold">
-      Hello {{sessionUserName}}, 
-    </div>
-    <div class="col">
-      <button type="button" class="btn btn-primary text-align-center" onclick="window.location.href='/blog'">Click here to create a Post</button>
-     {{else}}
-     <button type="button" class="btn btn-primary text-align-center" onclick="window.location.href='/login'">Click here to create a Post</button>
-    </div>
-     {{/if}}
-    <div class="col">
-    </div>
-  </div>
+<div class="container-sm">
+     <div class="row align-items-start">
+          <div class="col-4 text-bold text-align-left">
+               Hello {{sessionUserName}}, 
+          </div>
+          <div class="col-4">
+          </div>
+          <div class="col-4 text-align-right">
+               <button type="button" class="btn btn-primary text-align-right" onclick="window.location.href='/blog'">Click here to create a Post</button>
+          </div>
+     </div>
 </div>
 <br/><br/>
 {{#each  filteredUserBlogs as |blog|}}
@@ -27,6 +23,13 @@
           <div class="card-body">
                <p class="card-text text-align-left">{{{blog.blog_post}}}</p>
           </div>
+          <div class="card-body">
+               <span class="text-align-left">
+                    <i class="material-icons" style="color:#882CDF;">edit</i>
+                    <i class="material-icons" style="color:#882CDF;">comment</i>
+                    <i class="material-icons" style="color:#882CDF;">delete</i>
+               </span>
+          </div> 
      </div>
 </div>
 <br/>
