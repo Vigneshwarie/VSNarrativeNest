@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 
     // Get the necessary data
     const filteredBlogs = blogData.map(blog => blog.get({ plain: true }));
-    res.render('homepage', {filteredBlogs, loggedIn: req.session.loggedIn});
+    res.render('homepage', {filteredBlogs, loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId});
   } catch (err) {
     res.status(500).json(err);
   }
@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 // Router which checks for logged in user else redirect to login page. If it has a session user, then navigates to the dashboard
 router.get('/dashboard', (req, res) => {
   if (req.session.loggedIn) {
-    res.render('dashboard', {loggedIn: req.session.loggedIn});
+    res.render('dashboard', {loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId});
   } else {
     res.render('login');
   }
@@ -56,9 +56,10 @@ router.post('/login', async (req, res) => {
     }
       
     req.session.save(() => {
-        req.session.loggedIn = true;
-        res.status(200).json({ user: dbUserData, message: 'You are now logged in!' });
-      });
+      req.session.loggedIn = true;
+      req.session.sessionUserId = dbUserData.dataValues.user_id;
+      res.status(200).json({ user: dbUserData, message: 'You are now logged in!' });
+    });
     
   } catch (err) {
     res.status(500).json(err);
@@ -83,14 +84,14 @@ router.post('/logout', (req, res) => {
 });
 
 router.get('/blog', (req, res) => {
-    res.render('blog', {loggedIn: req.session.loggedIn});
+    res.render('blog', {loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId});
 });
 
 
 router.post('/blog', async (req, res) => {
   try {
     const saveBlogData = await Blog.create({
-      user_id: req.body.user_id,
+      user_id: req.session.sessionUserId,
       blog_title: req.body.blog_title,
       blog_post: req.body.blog_post,
     });

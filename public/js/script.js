@@ -29,7 +29,6 @@ const saveBlogPostHandler = (event) => {
      const blogPost = document.querySelector('#blogPost').value;
 
      const newBlogPost = {
-          user_id: 1,
           blog_title: blogTitle,
           blog_post: blogPost
      };
