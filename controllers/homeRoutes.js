@@ -22,9 +22,27 @@ router.get('/', async (req, res) => {
 });
 
 // Router which checks for logged in user else redirect to login page. If it has a session user, then navigates to the dashboard
-router.get('/dashboard', (req, res) => {
+router.get('/dashboard', async (req, res) => {
   if (req.session.loggedIn) {
-    res.render('dashboard', {loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId});
+    try {
+      const blogData = await Blog.findAll({
+        include: [{
+        model: User,
+          attributes: {
+            exclude: ["password"]
+          },
+          where: {
+          user_id: req.session.sessionUserId,
+        },
+        }]
+      });
+
+      const filteredUserBlogs = blogData.map(blog => blog.get({ plain: true })); 
+      res.render('dashboard', { filteredUserBlogs, loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId });
+      
+    } catch (err) {
+      res.status(500).json(err);
+    }
   } else {
     res.render('login');
   }

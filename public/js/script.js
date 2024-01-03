@@ -45,7 +45,7 @@ const saveBlogPost = async (newBlogPost) => {
      });
 
      if (response.ok) {
-          document.location.replace('/');
+          document.location.replace('/dashboard');
      } else {
           alert('Error in saving the posts');
      } 
@@ -56,15 +56,11 @@ const saveBlogPost = async (newBlogPost) => {
 
 
 
-
-
-
-
-if (window.location.pathname === '/login') {
+if (loginButton) {
      loginButton.addEventListener('click', loginFormHandler);
 }
 
-if (window.location.pathname === '/blog') {
+if (submitPostBtn) {
      submitPostBtn.addEventListener('click', saveBlogPostHandler);
 }
 
