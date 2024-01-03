@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 
     // Get the necessary data
     const filteredBlogs = blogData.map(blog => blog.get({ plain: true }));
-    res.render('homepage', {filteredBlogs, loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId});
+    res.render('homepage', {filteredBlogs, loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId, sessionUserName: req.session.sessionUserName});
   } catch (err) {
     res.status(500).json(err);
   }
@@ -38,7 +38,7 @@ router.get('/dashboard', async (req, res) => {
       });
 
       const filteredUserBlogs = blogData.map(blog => blog.get({ plain: true })); 
-      res.render('dashboard', { filteredUserBlogs, loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId });
+      res.render('dashboard', { filteredUserBlogs, loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId, sessionUserName: req.session.sessionUserName });
       
     } catch (err) {
       res.status(500).json(err);
@@ -76,6 +76,7 @@ router.post('/login', async (req, res) => {
     req.session.save(() => {
       req.session.loggedIn = true;
       req.session.sessionUserId = dbUserData.dataValues.user_id;
+      req.session.sessionUserName = dbUserData.dataValues.first_name + " " + dbUserData.dataValues.last_name;
       res.status(200).json({ user: dbUserData, message: 'You are now logged in!' });
     });
     
@@ -102,7 +103,7 @@ router.post('/logout', (req, res) => {
 });
 
 router.get('/blog', (req, res) => {
-    res.render('blog', {loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId});
+    res.render('blog', {loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId, sessionUserName: req.session.sessionUserName});
 });
 
 

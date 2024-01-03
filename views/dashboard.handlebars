@@ -1,3 +1,22 @@
+
+
+<div class="container text-center">
+  <div class="row align-items-start">
+      {{#if loggedIn}}
+    <div class="col text-bold">
+      Hello {{sessionUserName}}, 
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-primary text-align-center" onclick="window.location.href='/blog'">Click here to create a Post</button>
+     {{else}}
+     <button type="button" class="btn btn-primary text-align-center" onclick="window.location.href='/login'">Click here to create a Post</button>
+    </div>
+     {{/if}}
+    <div class="col">
+    </div>
+  </div>
+</div>
+<br/><br/>
 {{#each  filteredUserBlogs as |blog|}}
 <div class="container-sm">
      <div class="card box-border">
@@ -6,22 +25,12 @@
                <span class="text-align-right">Posted by {{{blog.user.first_name}}} {{{blog.user.last_name}}} on {{ formatDate blog.createdAt }}</span>
           </h5>
           <div class="card-body">
-               <p class="card-text">{{{blog.blog_post}}}</p>
+               <p class="card-text text-align-left">{{{blog.blog_post}}}</p>
           </div>
      </div>
 </div>
 <br/>
 {{/each}}
-<div class="container-sm">
-     <div class="text-align-center">
-          <span class="text-align-center">
-               {{#if loggedIn}}
-               <button type="button" class="btn btn-primary text-align-center" onclick="window.location.href='/blog'">Create a Post</button>
-               {{else}}
-               <button type="button" class="btn btn-primary text-align-center" onclick="window.location.href='/login'">Create a Post</button>
-               {{/if}}
-          </span>
-     </div>
-</div>
+
 
 
