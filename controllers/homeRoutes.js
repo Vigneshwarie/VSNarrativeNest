@@ -106,7 +106,7 @@ router.get('/blog', (req, res) => {
     res.render('blog', {loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId, sessionUserName: req.session.sessionUserName});
 });
 
-
+// Router to Save the Blog
 router.post('/blog', async (req, res) => {
   try {
     const saveBlogData = await Blog.create({
@@ -118,6 +118,30 @@ router.post('/blog', async (req, res) => {
     req.session.save(() => {
       req.session.loggedIn = true;
       res.status(200).json(saveBlogData);
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get('/signup', async (req, res) => { 
+  res.render('signup');
+});
+
+router.post('/signup', async (req, res) => { 
+  try {
+    const signupData = await User.create({
+      first_name: req.body.firstName,
+      last_name: req.body.lastName,
+      username: req.body.username,
+      password: req.body.password,
+    });
+
+    req.session.save(() => {
+      req.session.loggedIn = true;
+      req.session.sessionUserId = signupData.dataValues.user_id;
+      req.session.sessionUserName = signupData.dataValues.first_name + " " + signupData.dataValues.last_name;
+      res.status(200).json({ user: signupData, message: 'You are now signed up in the application!' });
     });
   } catch (err) {
     res.status(500).json(err);

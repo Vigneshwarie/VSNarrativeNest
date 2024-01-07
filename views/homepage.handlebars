@@ -10,7 +10,11 @@
           </div>
           <div class="card-body">
                <span class="text-align-left">
-                    <i class="material-icons" style="color:#882CDF;">comment</i>
+                    {{#if loggedIn}}
+                    <a href=""><i class="material-icons" style="color:#882CDF;">cloud</i></a>
+                    {{else}}
+                    <a href="/login"><i class="material-icons" style="color:#882CDF;">comment</i></a>
+                    {{/if}}
                </span>
           </div> 
      </div>
