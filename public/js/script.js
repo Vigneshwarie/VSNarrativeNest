@@ -2,6 +2,10 @@ var loginButton = document.querySelector('.login-form');
 var submitPostBtn = document.querySelector('#submitPostBtn');
 var signupbtn = document.querySelector('#signupbtn');
 
+var dashdeletebtn = document.querySelectorAll('.dashdeletebtn');
+
+
+
 // Function to Login into the application
 const loginFormHandler = async (event) => {
      event.preventDefault();
@@ -88,7 +92,31 @@ function comparePassword(password, confirmpassword) {
           return false;
      }
 }
-     
+
+for (let i = 0; i < dashdeletebtn.length; i++) {
+     dashdeletebtn[i].addEventListener("click", async function(event) {
+          var itemElement = event.currentTarget.parentElement;
+          const targetId = itemElement.getAttribute("id");
+          console.log(itemElement);
+          console.log(targetId);
+
+          const response = await fetch('/deletepost', {
+               method: 'DELETE',
+               body: JSON.stringify({targetId }),
+               headers: { 'Content-Type': 'application/json' },
+          });
+
+          if (response.ok) {
+               alert('Blog id# '+targetId+' deleted successfully');
+               document.location.replace('/dashboard');
+          } else {
+               alert('Delete Failed. Please try again!');
+          }
+     });
+}
+ 
+
+
      
 
 
@@ -104,5 +132,6 @@ if (submitPostBtn) {
 if (signupbtn) {
      signupbtn.addEventListener('click', signUpFormHandler);
 }
+
 
 

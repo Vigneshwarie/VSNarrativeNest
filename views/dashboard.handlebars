@@ -23,11 +23,11 @@
           <div class="card-body">
                <p class="card-text text-align-left">{{{blog.blog_post}}}</p>
           </div>
-          <div class="card-body">
-               <span class="text-align-left">
-                    <i class="material-icons" style="color:#882CDF;">edit</i>
-                    <i class="material-icons" style="color:#882CDF;">comment</i>
-                    <i class="material-icons" style="color:#882CDF;">delete</i>
+          <div class="card-body text-align-left">
+               <span class="material-icons id" id={{{blog.blog_id}}}>
+                    <i class="material-icons edit" style="color:#882CDF;">edit</i>
+                    <i class="material-icons comment" style="color:#882CDF;">comment</i>
+                    <button type="button" class="dashdeletebtn"><i class="material-icons" style="color:#882CDF;">delete</i></button>
                </span>
           </div> 
      </div>

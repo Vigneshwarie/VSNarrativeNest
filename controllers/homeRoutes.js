@@ -124,10 +124,12 @@ router.post('/blog', async (req, res) => {
   }
 });
 
+// Route to display the sign-up page
 router.get('/signup', async (req, res) => { 
   res.render('signup');
 });
 
+// Route for the sign-up functionality
 router.post('/signup', async (req, res) => { 
   try {
     const signupData = await User.create({
@@ -143,6 +145,20 @@ router.post('/signup', async (req, res) => {
       req.session.sessionUserName = signupData.dataValues.first_name + " " + signupData.dataValues.last_name;
       res.status(200).json({ user: signupData, message: 'You are now signed up in the application!' });
     });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.delete('/deletepost', async (req, res) => {
+  try {
+    const deleteBlog = await Blog.destroy({
+      where: {
+        blog_id: req.body.targetId,
+      }
+    });
+
+    res.status(200).json("{message:Deleted category data}");
   } catch (err) {
     res.status(500).json(err);
   }
