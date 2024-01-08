@@ -41,3 +41,8 @@
      display: hide;
 }
 
+.buttonIcon {
+     border: none;
+     background-color: transparent;
+}
+
