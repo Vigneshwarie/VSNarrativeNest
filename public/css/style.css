@@ -50,3 +50,22 @@
      color:#882CDF;
 }
 
+.hideComment {
+     display: none;
+}
+
+.showComment {
+     display: block;
+}
+
+.hideButtons{
+      display: none;
+}
+
+.showButtons{
+      display: block;
+}
+
+
+
+

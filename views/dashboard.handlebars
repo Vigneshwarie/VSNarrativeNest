@@ -23,13 +23,21 @@
           <div class="card-body">
                <p class="card-text text-align-left">{{{blog.blog_post}}}</p>
           </div>
-          <div class="card-body text-align-left">
-               <span class="material-icons id" id={{{blog.blog_id}}}>
+          <div class="card-body text-align-left buttonSection showButtons">
+               <p class="material-icons id" id={{{blog.blog_id}}}>
                      <button type="button" class="dasheditbtn buttonIcon"><i class="material-icons iconColor">edit</i></button>
                     <button type="button" class="dashcommentbtn buttonIcon"><i class="material-icons iconColor">comment</i></button>
                     <button type="button" class="dashdeletebtn buttonIcon"><i class="material-icons iconColor">delete</i></button>
-               </span>
+               </p>
           </div> 
+          <div class="card-body commentSection hideComment">
+               <div class="card-body">
+                    <textarea class="form-control blogComment" rows="2" placeholder="Enter the comment here"></textarea>
+               </div>
+                <div class="card-body" blogid={{blog.blog_id}}>
+                    <button type="submit" class="btn btn-primary submitCommentBtn">Save Comment</button>
+               </div>
+          </div>
      </div>
 </div>
 <br/>

@@ -3,6 +3,14 @@ var submitPostBtn = document.querySelector('#submitPostBtn');
 var signupbtn = document.querySelector('#signupbtn');
 
 var dashdeletebtn = document.querySelectorAll('.dashdeletebtn');
+var dashcommentbtn = document.querySelectorAll('.dashcommentbtn');
+var commentSection = document.querySelectorAll('.commentSection');
+var buttonSection = document.querySelectorAll('.buttonSection');
+var submitCommentBtn = document.querySelectorAll('.submitCommentBtn');
+var blogCommentElement = document.querySelectorAll('.blogComment');
+
+
+
 
 
 
@@ -112,6 +120,39 @@ for (let i = 0; i < dashdeletebtn.length; i++) {
                document.location.replace('/dashboard');
           } else {
                alert('Delete Failed. Please try again!');
+          }
+     });
+}
+
+for (let i = 0; i < dashcommentbtn.length; i++) {
+     dashcommentbtn[i].addEventListener('click', function (event) {
+          commentSection[i].classList.value = "showComment";
+          buttonSection[i].classList.value = "hideButtons";
+     });
+}
+
+for (let i = 0; i < submitCommentBtn.length; i++) {
+     submitCommentBtn[i].addEventListener('click', async function (event) {
+          var itemElement = event.currentTarget.parentElement;
+          const blogId = itemElement.getAttribute("blogid");
+          console.log('Saving blog Comment');
+          console.log(itemElement);
+          console.log(blogId);
+
+          var blogComment = blogCommentElement[i].value;
+          
+          console.log(blogComment);
+
+          const response = await fetch('/comment', {
+               method: 'POST',
+               body: JSON.stringify({blogId, blogComment }),
+               headers: { 'Content-Type': 'application/json' },
+          }); 
+
+          if (response.ok) {
+               document.location.replace('/dashboard');
+          } else {
+               alert('Blog Comment saved!');
           }
      });
 }

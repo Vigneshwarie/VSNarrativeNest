@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Blog, User } = require('../models');
+const { Blog, User, BlogComments } = require('../models');
 
 // Router to display all blog posts
 router.get('/', async (req, res) => {  
@@ -154,14 +154,38 @@ router.post('/signup', async (req, res) => {
 
 router.delete('/deletepost', async (req, res) => {
   try {
-    const deleteBlog = await Blog.destroy({
+    const deleteBlogComments = await BlogComments.destroy({
       where: {
         blog_id: req.body.targetId,
       }
     });
 
-    res.status(200).json("{message:Deleted category data}");
+    if (deleteBlogComments) {
+      const deleteBlog = await Blog.destroy({
+        where: {
+          blog_id: req.body.targetId,
+        }
+      });
+      res.status(200).json("{message:Deleted blog data}");
+    }
   } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.post('/comment', async (req, res) => {
+  try {
+    const blogCommentsDb = await BlogComments.create({
+      blog_id: req.body.blogId,
+      user_id: req.session.sessionUserId,
+      comment_post: req.body.blogComment,
+    });
+
+    if (blogCommentsDb) {
+      res.status(200).json("{message: Blog Comment saved}");
+    }
+  } catch (err) {
+    console.log("Error in Saving Comment ----", err);
     res.status(500).json(err);
   }
 });
