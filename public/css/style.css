@@ -1,7 +1,11 @@
 .card-header {
-     background-color: #882CDF;
+     background-color: #7D43E0;
      font-size: medium;
      color: #fff;
+}
+
+.navbar{
+     background-color: #7D43E0;
 }
 
 .text-bold {
@@ -9,7 +13,7 @@
 }
 
 .box-border {
-     border: solid 3px #882CDF;
+     border: solid 3px #7D43E0;
 }
 
 .text-align-right {
@@ -25,7 +29,7 @@
 }
 
 .btn-primary {
-     background-color: #882CDF;
+     background-color: #7D43E0;
 }
 
 .text-align-center {
@@ -47,7 +51,7 @@
 }
 
 .iconColor {
-     color:#882CDF;
+     color:#7D43E0;
 }
 
 .hideComment {
@@ -64,6 +68,10 @@
 
 .showButtons{
       display: block;
+}
+
+.containerWidth {
+     width: 50%;
 }
 
 
