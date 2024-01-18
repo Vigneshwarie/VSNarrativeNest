@@ -1,4 +1,4 @@
-{{#each  filteredBlogs as |blog|}}
+{{#each  blogData as |blog|}}
 <div class="container-sm">
      <div class="card box-border">
           <h5 class="card-header text-bold"> 
@@ -10,13 +10,21 @@
           </div>
           <div class="card-body">
                <span class="text-align-left">
-                    {{#if loggedIn}}
-                    <a href="#"><i class="material-icons iconColor">cloud</i></a>
+                     {{#if loggedIn}}
+                    <button type="button" class="dashcommentbtn buttonIcon"><i class="material-icons iconColor">comment</i></button>
                     {{else}}
-                    <a href="/login"><i class="material-icons iconColor">comment</i></a>
+                   <button type="button" class="buttonIcon" onclick="window.location.href='/login'"><i class="material-icons iconColor">cloud</i></button>
                     {{/if}}
                </span>
           </div> 
+          <div class="card-body commentSection hideComment">
+               <div class="card-body">
+                    <textarea class="form-control blogComment" rows="2" placeholder="Enter the comment here"></textarea>
+               </div>
+                <div class="card-body" blogid={{blog.blog_id}}>
+                    <button type="submit" class="btn btn-primary submitCommentBtn">Save Comment</button>
+               </div>
+          </div>
      </div>
 </div>
 <br/>

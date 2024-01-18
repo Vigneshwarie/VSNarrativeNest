@@ -1,5 +1,3 @@
-
-
 <div class="container-sm">
      <div class="row align-items-start">
           <div class="col-4 text-bold text-align-left">
@@ -13,7 +11,7 @@
      </div>
 </div>
 <br/><br/>
-{{#each  filteredUserBlogs as |blog|}}
+{{#each  blogData as |blog|}}
 <div class="container-sm">
      <div class="card box-border">
           <h5 class="card-header text-bold"> 
@@ -25,7 +23,7 @@
           </div>
           <div class="card-body text-align-left buttonSection showButtons">
                <p class="material-icons id" id={{{blog.blog_id}}}>
-                     <button type="button" class="dasheditbtn buttonIcon"><i class="material-icons iconColor">edit</i></button>
+                    <button type="button" class="dasheditbtn buttonIcon"><i class="material-icons iconColor">edit</i></button>
                     <button type="button" class="dashcommentbtn buttonIcon"><i class="material-icons iconColor">comment</i></button>
                     <button type="button" class="dashdeletebtn buttonIcon"><i class="material-icons iconColor">delete</i></button>
                </p>
