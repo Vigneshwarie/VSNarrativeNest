@@ -109,7 +109,7 @@ for (let i = 0; i < dashdeletebtn.length; i++) {
           console.log(itemElement);
           console.log(targetId);
 
-          const response = await fetch('/deletepost', {
+          const response = await fetch('/blog', {
                method: 'DELETE',
                body: JSON.stringify({targetId }),
                headers: { 'Content-Type': 'application/json' },

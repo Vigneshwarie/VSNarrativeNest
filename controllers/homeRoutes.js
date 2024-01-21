@@ -12,13 +12,14 @@ router.get('/', async (req, res) => {
           },
         }]
     });
-
     // Get the necessary data
     const filteredBlogs = blogData.map(blog => blog.get({ plain: true }));
-    res.render('homepage', {filteredBlogs, loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId, sessionUserName: req.session.sessionUserName});
+    console.log("session", req.session);
+    res.render('homepage', {blogData: filteredBlogs, loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId, sessionUserName: req.session.sessionUserName});
   } catch (err) {
     res.status(500).json(err);
   }
+  
 });
 
 // Router which checks for logged in user else redirect to login page. If it has a session user, then navigates to the dashboard
@@ -38,7 +39,7 @@ router.get('/dashboard', async (req, res) => {
       });
 
       const filteredUserBlogs = blogData.map(blog => blog.get({ plain: true })); 
-      res.render('dashboard', { filteredUserBlogs, loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId, sessionUserName: req.session.sessionUserName });
+      res.render('dashboard', { blogData: filteredUserBlogs, loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId, sessionUserName: req.session.sessionUserName });
       
     } catch (err) {
       res.status(500).json(err);
@@ -79,7 +80,7 @@ router.post('/login', async (req, res) => {
       req.session.sessionUserName = dbUserData.dataValues.first_name + " " + dbUserData.dataValues.last_name;
     //  res.status(200).json({ user: dbUserData, message: 'You are now logged in!' });
 
-      res.status(200).render('dashboard', {loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId, sessionUserName: req.session.sessionUserName});
+      res.status(200).render('homepage', {blogData: getAllBlogs(), loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId, sessionUserName: req.session.sessionUserName});
     });
     
   } catch (err) {
@@ -152,7 +153,7 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-router.delete('/deletepost', async (req, res) => {
+router.delete('/blog', async (req, res) => {
   try {
     const deleteBlogComments = await BlogComments.destroy({
       where: {
@@ -160,14 +161,13 @@ router.delete('/deletepost', async (req, res) => {
       }
     });
 
-    if (deleteBlogComments) {
-      const deleteBlog = await Blog.destroy({
-        where: {
-          blog_id: req.body.targetId,
-        }
-      });
-      res.status(200).json("{message:Deleted blog data}");
-    }
+    const deleteBlog = await Blog.destroy({
+      where: {
+        blog_id: req.body.targetId,
+      }
+    });
+    res.status(200).json("{message:Deleted blog data}");
+  
   } catch (err) {
     res.status(500).json(err);
   }
@@ -189,6 +189,45 @@ router.post('/comment', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+// Router to display all blog posts
+router.get('/home', async (req, res) => {  
+  try {
+    const blogData = await Blog.findAll({
+      include: [{
+        model: User,
+          attributes: {
+            exclude: ["password"]
+          },
+        }]
+    });
+
+    // Get the necessary data
+    const filteredBlogs = blogData.map(blog => blog.get({ plain: true }));
+    res.render('homepage', {blogData: filteredBlogs, loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId, sessionUserName: req.session.sessionUserName });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// Function to get all user blog data
+const getAllBlogs = async function () {
+  try {
+    const blogData = await Blog.findAll({
+      include: [{
+        model: User,
+          attributes: {
+            exclude: ["password"]
+          },
+        }]
+    });
+    // Get the necessary data
+    const filteredBlogs = blogData.map(blog => blog.get({ plain: true }));
+    return filteredBlogs;
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
 
 
 module.exports = router;

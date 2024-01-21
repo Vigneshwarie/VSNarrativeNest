@@ -9,19 +9,15 @@
                <p class="card-text">{{{blog.blog_post}}}</p>
           </div>
           <div class="card-body">
-               <span class="text-align-left">
-                     {{#if loggedIn}}
-                    <button type="button" class="dashcommentbtn buttonIcon"><i class="material-icons iconColor">comment</i></button>
-                    {{else}}
-                   <button type="button" class="buttonIcon" onclick="window.location.href='/login'"><i class="material-icons iconColor">cloud</i></button>
-                    {{/if}}
+               <span class="text-align-left" blogid={{blog.blog_id}}>
+                    <button type="button" class="homecommentbtn buttonIcon" onclick="window.location.href='/blog'"><i class="material-icons iconColor">comment</i></button>
                </span>
           </div> 
           <div class="card-body commentSection hideComment">
                <div class="card-body">
                     <textarea class="form-control blogComment" rows="2" placeholder="Enter the comment here"></textarea>
                </div>
-                <div class="card-body" blogid={{blog.blog_id}}>
+                <div class="card-body" >
                     <button type="submit" class="btn btn-primary submitCommentBtn">Save Comment</button>
                </div>
           </div>
