@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     });
     // Get the necessary data
     const filteredBlogs = blogData.map(blog => blog.get({ plain: true }));
-    console.log("session", req.session);
+    //console.log("session", req.session);
     res.render('homepage', {blogData: filteredBlogs, loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId, sessionUserName: req.session.sessionUserName});
   } catch (err) {
     res.status(500).json(err);
@@ -228,6 +228,32 @@ const getAllBlogs = async function () {
     res.status(500).json(err);
   }
 }
+
+
+router.get('/blog/:blogId', async (req, res) => {
+  try {
+    const blogDataById = await Blog.findByPk(req.params.blogId);
+
+    if(!blogDataById) {
+      res.status(404).json({message: 'No Blog with this id!'});
+      return;
+    }
+    const blogData = blogDataById.get({ plain: true });
+    console.log(blogData);
+    //, { filteredBlogData: blogData }
+    res.render('blogcomments', { filteredBlogData: blogData });
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+
+});
+
+// Route to display the Blog by Id
+router.get('/blogcomments', async (req, res) => { 
+  res.render('blogcomments');
+});
 
 
 module.exports = router;

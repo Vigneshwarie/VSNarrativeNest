@@ -8,6 +8,8 @@ var commentSection = document.querySelectorAll('.commentSection');
 var buttonSection = document.querySelectorAll('.buttonSection');
 var submitCommentBtn = document.querySelectorAll('.submitCommentBtn');
 var blogCommentElement = document.querySelectorAll('.blogComment');
+var homecommentbtn = document.querySelectorAll('.homecommentbtn');
+
 
 
 
@@ -156,8 +158,30 @@ for (let i = 0; i < submitCommentBtn.length; i++) {
           }
      });
 }
- 
 
+
+ 
+for (comment of homecommentbtn) {
+     comment.addEventListener('click', async function (event) {
+          event.preventDefault();
+          var itemElement = event.currentTarget.parentElement;
+          const blogId = itemElement.getAttribute("blogid");
+
+          if (blogId) {
+          const response = await fetch(`/blog/${blogId}`, {
+               method: 'GET',
+               headers: { 'Content-Type': 'application/json' },
+          });
+               console.log(12346789);
+               console.log(response);
+
+          if (response.ok) {
+               document.location.replace('/blogcomments');
+          } 
+     }
+        
+     });
+}
 
      
 
@@ -174,6 +198,8 @@ if (submitPostBtn) {
 if (signupbtn) {
      signupbtn.addEventListener('click', signUpFormHandler);
 }
+
+
 
 
 
