@@ -9,6 +9,11 @@ var buttonSection = document.querySelectorAll('.buttonSection');
 var submitCommentBtn = document.querySelectorAll('.submitCommentBtn');
 var blogCommentElement = document.querySelectorAll('.blogComment');
 var homecommentbtn = document.querySelectorAll('.homecommentbtn');
+var submitBlogCommentBtn = document.querySelector('.submitBlogCommentBtn');
+var blogcommentbtn = document.querySelector('.blogcommentbtn');
+
+var blogButtonSection = document.querySelector('.blogButtonSection');
+var blogCommentSection = document.querySelector('.blogCommentSection');
 
 
 
@@ -160,6 +165,39 @@ for (let i = 0; i < submitCommentBtn.length; i++) {
 }
 
 
+
+const commentBtnHandler = async (event) => { 
+     blogButtonSection.classList.value = "hideButtons";
+     blogCommentSection.classList.value = "showComment";
+};
+
+const commentHandler = async (event) => { 
+     event.preventDefault();
+     const blogIdElement = document.querySelector('.blogIdClass');
+     const blogId = blogIdElement.getAttribute("blogid");
+     const blogComment = document.querySelector('.blogComment').value;
+     saveCommentFunction(blogId, blogComment, "homeComment");
+};
+
+async function saveCommentFunction(blogId, blogComment, commentType) {
+     console.log("Inside Saving Comment");
+     console.log(blogId);
+     console.log(blogComment);
+
+     const response = await fetch('/comment', {
+          method: 'POST',
+          body: JSON.stringify({blogId, blogComment }),
+          headers: { 'Content-Type': 'application/json' },
+     }); 
+
+     if (response.ok && commentType === "homeComment") {
+          document.location.replace(`/blogcomments/${blogId}`);
+     } else {
+          alert('Blog Comment saved!');
+     }
+}
+
+
  
 for (comment of homecommentbtn) {
      comment.addEventListener('click', async function (event) {
@@ -198,6 +236,14 @@ if (submitPostBtn) {
 
 if (signupbtn) {
      signupbtn.addEventListener('click', signUpFormHandler);
+}
+
+if (submitBlogCommentBtn) {
+     submitBlogCommentBtn.addEventListener('click', commentHandler);
+}
+
+if (blogcommentbtn) {
+     blogcommentbtn.addEventListener('click', commentBtnHandler);
 }
 
 
