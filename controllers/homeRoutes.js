@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const e = require('express');
 const { Blog, User, BlogComments } = require('../models');
 
 // Router to display all blog posts
@@ -216,13 +217,13 @@ router.get('/home', async (req, res) => {
 const getAllBlogs = async function () {
   try {
     const blogData = await Blog.findAll({
-      include: [{
+     include: [{
         model: User,
           attributes: {
             exclude: ["password"]
           },
         }]
-    });
+     });
     // Get the necessary data
     const filteredBlogs = blogData.map(blog => blog.get({ plain: true }));
     return filteredBlogs;
@@ -233,22 +234,24 @@ const getAllBlogs = async function () {
 
 
 router.get('/blogcomments/:blogId', async (req, res) => {
-  try {
-    const blogDataById = await Blog.findByPk(req.params.blogId);
+     try {
+          if (req.session.loggedIn) {
+               const blogDataById = await Blog.findByPk(req.params.blogId);
 
-    if(!blogDataById) {
-      res.status(404).json({message: 'No Blog with this id!'});
-      return;
-    }
-    const blogData = blogDataById.get({ plain: true });
-    console.log(blogData);
-    res.render('blogcomments', { filteredBlogData: blogData });
-
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
-
+               if(!blogDataById) {
+                    res.status(404).json({message: 'No Blog with this id!'});
+                    return;
+               }
+               const blogData = blogDataById.get({ plain: true });
+               console.log(blogData);
+               res.render('blogcomments', { filteredBlogData: blogData, loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId, sessionUserName: req.session.sessionUserName });
+          } else {
+               res.status(401).render('login');
+          }
+     } catch (err) {
+          console.log(err);
+          res.status(500).json(err);
+     }
 });
 
 

@@ -177,7 +177,9 @@ for (comment of homecommentbtn) {
 
           if (response.ok) {
                document.location.replace(`/blogcomments/${blogId}`);
-          } 
+          } else {
+               document.location.replace('/login');
+          }
      }
         
      });
