@@ -18,6 +18,10 @@ User.hasMany(Blog, {
      foreignKey: 'user_id',
 });
 
+Blog.hasMany(BlogComments, {
+     foreignKey: 'blog_id',
+});
+
 BlogComments.hasMany(Blog, {
      foreignKey: 'blog_id',
 });

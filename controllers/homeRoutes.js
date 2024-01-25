@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const e = require('express');
 const { Blog, User, BlogComments } = require('../models');
 
 // Router to display all blog posts
@@ -236,15 +235,48 @@ const getAllBlogs = async function () {
 router.get('/blogcomments/:blogId', async (req, res) => {
      try {
           if (req.session.loggedIn) {
-               const blogDataById = await Blog.findByPk(req.params.blogId);
+               const blogDataById = await Blog.findByPk(req.params.blogId, {
+                    include: [
+                         {
+                              model: User,
+                              attributes: {
+                                   exclude: ["password"]
+                              },
+                         },
+                    ],
+               });
+               //console.log("blogDataById===", blogDataById);
+               const blogDataWithComments = await Blog.findByPk(req.params.blogId, {
+                    include: [
+                         {
+                              model: User,
+                              attributes: {
+                                   exclude: ["password"]
+                              },
+                         },
+                         {
+                              model: BlogComments,
+                              include: [
+                                   {
+                                        model: User,
+                                        attributes: {
+                                             exclude: ["password"]
+                                        },
+                                   },
+                              ],
+                         },
+                    ],
+               });
+              
+               //console.log("blogDataWithComments===", blogDataWithComments);
 
-               if(!blogDataById) {
-                    res.status(404).json({message: 'No Blog with this id!'});
-                    return;
-               }
-               const blogData = blogDataById.get({ plain: true });
-               console.log(blogData);
-               res.render('blogcomments', { filteredBlogData: blogData, loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId, sessionUserName: req.session.sessionUserName });
+               if (blogDataWithComments) {
+                    const blogCommentsData = blogDataWithComments.get({ plain: true }); 
+                    res.status(200).render('blogcomments', { filteredBlogData: blogCommentsData, loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId, sessionUserName: req.session.sessionUserName });
+               } else {
+                    const blogData = blogDataById.map(blog => blog.get({ plain: true }));
+                    res.status(200).render('blogcomments', { filteredBlogData: blogData, loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId, sessionUserName: req.session.sessionUserName });
+               }          
           } else {
                res.status(401).render('login');
           }

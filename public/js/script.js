@@ -168,20 +168,19 @@ for (comment of homecommentbtn) {
           const blogId = itemElement.getAttribute("blogid");
           console.log(blogId);
           if (blogId) {
-          const response = await fetch(`/blogcomments/${blogId}`, {
-               method: 'GET',
-               headers: { 'Content-Type': 'application/json' },
-          });
-               console.log(12346789);
-               console.log(response);
+               const response = await fetch(`/blogcomments/${blogId}`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+               });
+                    console.log(12346789);
+                    console.log(response);
 
-          if (response.ok) {
-               document.location.replace(`/blogcomments/${blogId}`);
-          } else {
-               document.location.replace('/login');
+               if (response.ok) {
+                    document.location.replace(`/blogcomments/${blogId}`);
+               } else {
+                    document.location.replace('/login');
+               }
           }
-     }
-        
      });
 }
 
