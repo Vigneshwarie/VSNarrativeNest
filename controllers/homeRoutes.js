@@ -17,6 +17,8 @@ router.get('/', async (req, res) => {
     //console.log("session", req.session);
     res.render('homepage', {blogData: filteredBlogs, loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId, sessionUserName: req.session.sessionUserName});
   } catch (err) {
+    console.log(err);
+    console.log(err.stack);
     res.status(500).json(err);
   }
   
@@ -230,7 +232,7 @@ const getAllBlogs = async function () {
 }
 
 
-router.get('/blog/:blogId', async (req, res) => {
+router.get('/blogcomments/:blogId', async (req, res) => {
   try {
     const blogDataById = await Blog.findByPk(req.params.blogId);
 
@@ -240,7 +242,6 @@ router.get('/blog/:blogId', async (req, res) => {
     }
     const blogData = blogDataById.get({ plain: true });
     console.log(blogData);
-    //, { filteredBlogData: blogData }
     res.render('blogcomments', { filteredBlogData: blogData });
 
   } catch (err) {
@@ -250,10 +251,6 @@ router.get('/blog/:blogId', async (req, res) => {
 
 });
 
-// Route to display the Blog by Id
-router.get('/blogcomments', async (req, res) => { 
-  res.render('blogcomments');
-});
 
 
 module.exports = router;

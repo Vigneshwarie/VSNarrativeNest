@@ -163,12 +163,12 @@ for (let i = 0; i < submitCommentBtn.length; i++) {
  
 for (comment of homecommentbtn) {
      comment.addEventListener('click', async function (event) {
-          event.preventDefault();
+          //event.preventDefault();
           var itemElement = event.currentTarget.parentElement;
           const blogId = itemElement.getAttribute("blogid");
-
+          console.log(blogId);
           if (blogId) {
-          const response = await fetch(`/blog/${blogId}`, {
+          const response = await fetch(`/blogcomments/${blogId}`, {
                method: 'GET',
                headers: { 'Content-Type': 'application/json' },
           });
@@ -176,7 +176,7 @@ for (comment of homecommentbtn) {
                console.log(response);
 
           if (response.ok) {
-               document.location.replace('/blogcomments');
+               document.location.replace(`/blogcomments/${blogId}`);
           } 
      }
         
