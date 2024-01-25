@@ -272,6 +272,7 @@ router.get('/blogcomments/:blogId', async (req, res) => {
 
                if (blogDataWithComments) {
                     const blogCommentsData = blogDataWithComments.get({ plain: true }); 
+                    console.log("blogCommentsData===", blogCommentsData);
                     res.status(200).render('blogcomments', { filteredBlogData: blogCommentsData, loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId, sessionUserName: req.session.sessionUserName });
                } else {
                     const blogData = blogDataById.map(blog => blog.get({ plain: true }));

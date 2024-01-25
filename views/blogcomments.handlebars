@@ -8,5 +8,12 @@
           <div class="card-body">
                <p class="card-text">{{filteredBlogData.blog_post}}</p>    
           </div>
+          <hr/>
+          {{#each filteredBlogData.blog_comments as |comment|}}
+          <div class="card-body">
+               <span class="text-align-left text-bold">{{comment.user.first_name}} commented on {{formatDate comment.createdAt}}: </span> 
+               <p class="card-text">{{comment.comment_post}}</p>
+          </div>
+          {{/each}}
      </div>
 </div>
