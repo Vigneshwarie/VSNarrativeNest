@@ -17,10 +17,6 @@ var blogCommentSection = document.querySelector('.blogCommentSection');
 
 
 
-
-
-
-
 // Function to Login into the application
 const loginFormHandler = async (event) => {
      event.preventDefault();
@@ -99,7 +95,8 @@ const signUpFormHandler = async (event) => {
           }
      }
 };
-     
+
+// Function to compare the password and confirm password
 function comparePassword(password, confirmpassword) {
      if (password === confirmpassword) {
           return true;
@@ -109,12 +106,11 @@ function comparePassword(password, confirmpassword) {
      }
 }
 
+// Function to delete the blog post
 for (let i = 0; i < dashdeletebtn.length; i++) {
      dashdeletebtn[i].addEventListener("click", async function(event) {
           var itemElement = event.currentTarget.parentElement;
           const targetId = itemElement.getAttribute("id");
-          console.log(itemElement);
-          console.log(targetId);
 
           const response = await fetch('/blog', {
                method: 'DELETE',
@@ -131,6 +127,7 @@ for (let i = 0; i < dashdeletebtn.length; i++) {
      });
 }
 
+// Function to display the comment section in dashboard page
 for (let i = 0; i < dashcommentbtn.length; i++) {
      dashcommentbtn[i].addEventListener('click', function (event) {
           commentSection[i].classList.value = "showComment";
@@ -138,39 +135,23 @@ for (let i = 0; i < dashcommentbtn.length; i++) {
      });
 }
 
+// Function to save the comment from dashboard page
 for (let i = 0; i < submitCommentBtn.length; i++) {
      submitCommentBtn[i].addEventListener('click', async function (event) {
           var itemElement = event.currentTarget.parentElement;
           const blogId = itemElement.getAttribute("blogid");
-          console.log('Saving blog Comment');
-          console.log(itemElement);
-          console.log(blogId);
-
           var blogComment = blogCommentElement[i].value;
-          
-          console.log(blogComment);
-
-          const response = await fetch('/comment', {
-               method: 'POST',
-               body: JSON.stringify({blogId, blogComment }),
-               headers: { 'Content-Type': 'application/json' },
-          }); 
-
-          if (response.ok) {
-               document.location.replace('/dashboard');
-          } else {
-               alert('Blog Comment saved!');
-          }
+          saveCommentFunction(blogId, blogComment, "dashboardComment");
      });
 }
 
-
-
+// Function to display the comment section in home page
 const commentBtnHandler = async (event) => { 
      blogButtonSection.classList.value = "hideButtons";
      blogCommentSection.classList.value = "showComment";
 };
 
+// Function to save the comment from home page
 const commentHandler = async (event) => { 
      event.preventDefault();
      const blogIdElement = document.querySelector('.blogIdClass');
@@ -179,11 +160,8 @@ const commentHandler = async (event) => {
      saveCommentFunction(blogId, blogComment, "homeComment");
 };
 
+// Function to save the comment in the database
 async function saveCommentFunction(blogId, blogComment, commentType) {
-     console.log("Inside Saving Comment");
-     console.log(blogId);
-     console.log(blogComment);
-
      const response = await fetch('/comment', {
           method: 'POST',
           body: JSON.stringify({blogId, blogComment }),
@@ -192,26 +170,25 @@ async function saveCommentFunction(blogId, blogComment, commentType) {
 
      if (response.ok && commentType === "homeComment") {
           document.location.replace(`/blogcomments/${blogId}`);
+     } else if (response.ok && commentType === "dashboardComment") { 
+          document.location.replace('/dashboard');
      } else {
           alert('Blog Comment saved!');
      }
 }
 
-
- 
+// Function to display the comment section in blog comment page
 for (comment of homecommentbtn) {
      comment.addEventListener('click', async function (event) {
           //event.preventDefault();
           var itemElement = event.currentTarget.parentElement;
           const blogId = itemElement.getAttribute("blogid");
-          console.log(blogId);
+
           if (blogId) {
                const response = await fetch(`/blogcomments/${blogId}`, {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
                });
-                    console.log(12346789);
-                    console.log(response);
 
                if (response.ok) {
                     document.location.replace(`/blogcomments/${blogId}`);
@@ -223,7 +200,6 @@ for (comment of homecommentbtn) {
 }
 
      
-
 
 
 if (loginButton) {
