@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User } = require('../models');
+const { User, Blog } = require('../models');
 
 router.get('/login', (req, res) => {
      res.render('login');
