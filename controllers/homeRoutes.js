@@ -212,6 +212,28 @@ router.get('/blog/:blogId', async (req, res) => {
      }
 });
 
+// Router to Update the Blog based on the blog id
+router.put('/blog/:blogId', async (req, res) => {
+     try {
+          const saveBlogData = await Blog.update(
+               {
+                    blog_title: req.body.blog_title,
+                    blog_post: req.body.blog_post,
+               },
+               {
+                    where: {
+                         blog_id: req.params.blogId,
+                    },
+               }
+          );
+          res.status(200).json(saveBlogData);
+     } catch (err) {
+          console.log("Error in Updating Blog ----", err);
+          res.status(500).json(err);
+     }
+});
+
+
 
 
 module.exports = router;

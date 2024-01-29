@@ -46,22 +46,36 @@ const saveBlogPostHandler = (event) => {
      const blogTitle = document.querySelector('#blogTitle').value;
      const blogPost = document.querySelector('#blogPost').value;
 
+     var itemElement = event.currentTarget.parentElement;
+     const blogId = itemElement.getAttribute("blogId");
+
      const newBlogPost = {
           blog_title: blogTitle,
           blog_post: blogPost
      };
-     saveBlogPost(newBlogPost);
+     saveBlogPost(newBlogPost, blogId);
 };
 
 // Function to save the Blog Post
-const saveBlogPost = async (newBlogPost) => {
-     const response = await fetch('/blog', {
-          method: 'POST',
-          headers: {
-               'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(newBlogPost)
-     });
+const saveBlogPost = async (newBlogPost, blogId) => {
+     let response;
+     if (blogId) {
+          response = await fetch(`/blog/${blogId}`, {
+               method: 'PUT',
+               headers: {
+                    'Content-Type': 'application/json'
+               },
+               body: JSON.stringify(newBlogPost)
+          });
+     } else {
+          response = await fetch('/blog', {
+               method: 'POST',
+               headers: {
+                    'Content-Type': 'application/json'
+               },
+               body: JSON.stringify(newBlogPost)
+          });
+     }
 
      if (response.ok) {
           document.location.replace('/dashboard');
