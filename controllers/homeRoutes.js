@@ -190,6 +190,28 @@ router.get('/blogcomments/:blogId', async (req, res) => {
      }
 });
 
+// Function to get blog details for edit
+router.get('/blog/:blogId', async (req, res) => { 
+     try {
+          const blogDataById = await Blog.findByPk(req.params.blogId, {
+               include: [
+                    {
+                         model: User,
+                         attributes: {
+                              exclude: ["password"]
+                         },
+                    },
+               ],
+          });
+
+          const blogData = blogDataById.get({ plain: true });
+          res.status(200).render('blog', { filteredBlogData: blogData, loggedIn: req.session.loggedIn, sessionUserId: req.session.sessionUserId, sessionUserName: req.session.sessionUserName });
+     } catch (err) {
+          console.log(err);
+          res.status(500).json(err);
+     }
+});
+
 
 
 module.exports = router;

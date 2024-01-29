@@ -3,6 +3,7 @@ var submitPostBtn = document.querySelector('#submitPostBtn');
 var signupbtn = document.querySelector('#signupbtn');
 
 var dashdeletebtn = document.querySelectorAll('.dashdeletebtn');
+var dasheditbtn = document.querySelectorAll('.dasheditbtn');
 var dashcommentbtn = document.querySelectorAll('.dashcommentbtn');
 var commentSection = document.querySelectorAll('.commentSection');
 var buttonSection = document.querySelectorAll('.buttonSection');
@@ -199,6 +200,21 @@ for (comment of homecommentbtn) {
      });
 }
 
+// Function to display the blog post in blog page for editing
+for (blog of dasheditbtn) {
+     blog.addEventListener('click', async function (event) {
+          var itemElement = event.currentTarget.parentElement;
+          const targetId = itemElement.getAttribute("id");
+          const response = await fetch(`/blog/${targetId}`, {
+               method: 'GET',
+               headers: { 'Content-Type': 'application/json' },
+          });
+
+          if (response.ok) {
+               document.location.replace(`/blog/${targetId}`);
+          } 
+     });
+}
      
 
 
