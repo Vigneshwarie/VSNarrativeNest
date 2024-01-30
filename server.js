@@ -41,8 +41,8 @@ const PORT = process.env.PORT || 3001;
 // Based on this thread, I'm commenting this as it says we dont need to sync the database frequently when no changes made on database structure
 // The thread https://github.com/sequelize/sequelize/issues/9653
 // Listening to the port
-sequelize.sync({ force: false }).then(() => {
+//sequelize.sync({ force: false }).then(() => {
      app.listen(PORT, () => {
           console.log(`Server running on port ${PORT}`);
      });
-});
+//});
