@@ -15,6 +15,9 @@ var blogcommentbtn = document.querySelector('.blogcommentbtn');
 
 var blogButtonSection = document.querySelector('.blogButtonSection');
 var blogCommentSection = document.querySelector('.blogCommentSection');
+var cancelCommentBtn = document.querySelector('.cancelCommentBtn');
+var cancelPostBtn = document.querySelector('#cancelPostBtn');
+var cancelDashCommentBtn = document.querySelectorAll('.cancelDashCommentBtn');
 
 
 
@@ -250,6 +253,28 @@ if (submitBlogCommentBtn) {
 
 if (blogcommentbtn) {
      blogcommentbtn.addEventListener('click', commentBtnHandler);
+}
+
+if (cancelCommentBtn) {
+     cancelCommentBtn.addEventListener('click', function (event) {
+          var itemElement = event.currentTarget.parentElement;
+          const blogId = itemElement.getAttribute("blogid");
+          window.location.replace(`/blogcomments/${blogId}`);
+     });
+}
+
+if (cancelPostBtn) {
+     cancelPostBtn.addEventListener('click', function (event) {
+          event.preventDefault();
+          console.log(1234);
+          window.location.replace('/dashboard');
+      });
+}
+
+for(cancelBtn of cancelDashCommentBtn) {
+     cancelBtn.addEventListener('click', function (event) {
+          window.location.replace('/dashboard');
+     });
 }
 
 
